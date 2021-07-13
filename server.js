@@ -21,29 +21,44 @@ const db = mysql.createConnection(
     console.log('Connected to the election database.')
   );
 
-db.query(`SELECT * FROM candidates`, (err, rows) => {
-  console.log(rows);
-});
+  // Get all candidates
+app.get('/api/candidates', (req, res) => {
+  const sql = `SELECT * FROM candidates`;
 
-// GET a single candidate
-db.query(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(row);
+  db.query(sql, (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: err.message });
+      return;
+    }
+    res.json({
+      message: 'success',
+      data: rows
+    });
+  });
 });
+// db.query(`SELECT * FROM candidates`, (err, rows) => {
+//   console.log(rows);
+// });
 
-// Create a candidate
-const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) 
-              VALUES (?,?,?,?)`;
-const params = [1, 'Ronald', 'Firbank', 1];
+// // GET a single candidate
+// db.query(`SELECT * FROM candidates WHERE id = 1`, (err, row) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(row);
+// });
 
-db.query(sql, params, (err, result) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(result);
-});
+// // Create a candidate
+// const sql = `INSERT INTO candidates (id, first_name, last_name, industry_connected) 
+//               VALUES (?,?,?,?)`;
+// const params = [1, 'Ronald', 'Firbank', 1];
+
+// db.query(sql, params, (err, result) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(result);
+// });
 
 // // Delete a candidate
 // db.query(`DELETE FROM candidates WHERE id = ?`, 1, (err, result) => {
