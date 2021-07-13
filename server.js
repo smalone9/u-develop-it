@@ -84,9 +84,8 @@ app.post('/api/candidate', ({ body }, res) => {
     res.status(400).json({ error: errors });
     return;
   }
-});
 
-const sql = `INSERT INTO candidates (first_name, last_name, industry_connected)
+  const sql = `INSERT INTO candidates (first_name, last_name, industry_connected)
   VALUES (?,?,?)`;
 const params = [body.first_name, body.last_name, body.industry_connected];
 
@@ -100,13 +99,7 @@ db.query(sql, params, (err, result) => {
     data: body
   });
 });
-
-// db.query(sql, params, (err, result) => {
-//   if (err) {
-//     console.log(err);
-//   }
-//   console.log(result);
-// });
+});
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
