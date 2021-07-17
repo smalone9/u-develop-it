@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('./db/connection');
+const apiRoutes = require('./routes/apiRoutes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -177,6 +178,9 @@ app.delete('/api/party/:id', (req, res) => {
     }
   });
 });
+
+// use api routes
+app.use('/api', apiRoutes);
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
